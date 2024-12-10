@@ -1,9 +1,201 @@
 ---
 import Layout from '@layouts/Layout.astro';
-const gh = '';
-const title = '';
+const gh = 'https://github.com/jws-playgrounds/particles-fire-effect';
+const title = 'particles-fire-effect';
 ---
 
 <Layout pageId='top' gh={gh} title={title}>
-  <div class='container'></div>
+  <div class='bg' data-bg='01'>
+    <div class='particles' id='tsparticles'></div>
+    <div class='bg_select'>
+      <div class='bg_select_img' data-bg='01'></div>
+      <div class='bg_select_img' data-bg='02'></div>
+    </div>
+  </div>
 </Layout>
+
+<style is:inline>
+  .bg {
+    width: 100%;
+    height: calc(var(--vph) * 1px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    transition: 0.3s all ease-in;
+  }
+  .bg[data-bg='01'] {
+    background-image: url('https://assets.codepen.io/4788040/fire2.jpg');
+  }
+  .bg[data-bg='02'] {
+    background-image: url('https://assets.codepen.io/4788040/fire1.jpg');
+  }
+
+  .particles {
+    position: absolute;
+    width: 100%;
+    height: calc(var(--vph) * 1px);
+    z-index: 2;
+  }
+
+  .bg_select {
+    position: absolute;
+    width: 150px;
+    bottom: 5%;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 3;
+  }
+  .bg_select_img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    height: 100%;
+    width: 45%;
+    border: 2px solid #fff;
+    transition: 0.3s all ease-in;
+  }
+  .bg_select_img:hover {
+    box-shadow: 0px 0px 8px 3px #fff;
+  }
+  .bg_select_img[data-bg='01'] {
+    background-image: url('https://assets.codepen.io/4788040/fire2.jpg');
+  }
+  .bg_select_img[data-bg='02'] {
+    background-image: url('https://assets.codepen.io/4788040/fire1.jpg');
+  }
+</style>
+
+<script
+  src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+  is:inline></script>
+<script
+  src='https://cdn.jsdelivr.net/npm/jquery-particles@1.12.7/dist/jquery.particles.min.js'
+  is:inline></script>
+<script
+  src='https://cdn.jsdelivr.net/npm/tsparticles@1.12.7/dist/tsparticles.min.js'
+  is:inline></script>
+<script defer is:inline>
+  var data = {
+    particles: {
+      number: {
+        value: 200,
+        density: {
+          enable: true,
+          value_area: 3000,
+        },
+      },
+      color: {
+        value: '#fd7907',
+      },
+      shape: {
+        type: 'circle',
+        stroke: {
+          width: 0,
+          color: '#000000',
+        },
+        polygon: {
+          nb_sides: 3,
+        },
+        image: {
+          src: 'img/github.svg',
+          width: 100,
+          height: 100,
+        },
+      },
+      opacity: {
+        value: 0.6,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false,
+        },
+      },
+      size: {
+        value: 4,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 5,
+          size_min: 0.01,
+          sync: false,
+        },
+      },
+      line_linked: {
+        enable: false,
+        distance: 500,
+        color: '#ffffff',
+        opacity: 0.4,
+        width: 1,
+      },
+      move: {
+        enable: true,
+        speed: 7.8,
+        direction: 'top',
+        random: true,
+        straight: false,
+        out_mode: 'out',
+        bounce: false,
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200,
+        },
+      },
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: {
+          enable: false,
+          mode: 'bubble',
+        },
+        onclick: {
+          enable: false,
+          mode: 'repulse',
+        },
+        resize: true,
+      },
+      modes: {
+        grab: {
+          distance: 400,
+          line_linked: {
+            opacity: 0.5,
+          },
+        },
+        bubble: {
+          distance: 400,
+          size: 4,
+          duration: 0.3,
+          opacity: 1,
+          speed: 3,
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4,
+        },
+        push: {
+          particles_nb: 4,
+        },
+        remove: {
+          particles_nb: 2,
+        },
+      },
+    },
+    retina_detect: true,
+  };
+
+  $('#tsparticles').particles().init(data);
+
+  $('.bg_select_img').on('click', function () {
+    var bg = $(this).attr('data-bg');
+    $('.bg').attr('data-bg', bg);
+  });
+</script>
